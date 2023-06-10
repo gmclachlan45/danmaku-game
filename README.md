@@ -1,2 +1,6 @@
 # danmaku-game
-A 2D Shmup being made as a collaborative passion project
+A 2D Vertical Shmup
+
+Made as a collaborative passion project
+
+## TODO
