@@ -31,9 +31,11 @@
 *.out
 *.app
 
-# The binary executable
-/bin/*
+# Emacs files
+*~
+\#*\#
 
+# CMake files
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
