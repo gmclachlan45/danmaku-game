@@ -44,5 +44,5 @@ On *BSD:
 2.) Run `mingw32-make`
 
 ## Linux/*BSD
-1.) In the root of this project, run `cmake . -G "Unix Makefiles"` (?)
+1.) In the root of this project, run `cmake .`
 2.) Run `make`

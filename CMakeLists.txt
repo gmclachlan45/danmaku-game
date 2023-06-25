@@ -1,11 +1,15 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.20)
 project(danmaku-game VERSION 0.1)
 
 set( CMAKE_CXX_STANDARD 20 )
 set( CMAKE_CXX_STANDARD_REQUIRED True )
 
 # set(GCC_COVERAGE_COMPILE_FLAGS "")
-set(GCC_COVERAGE_LINK_FLAGS    "-lopengl32 -lgdi32")
+if(WIN32)
+  set(GCC_COVERAGE_LINK_FLAGS    "-lopengl32 -lgdi32")
+endif()
+
+
 # find_package(Threads)
 
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
@@ -23,6 +27,5 @@ target_link_libraries(danmaku-game ${CMAKE_BINARY_DIR}/../external/lib/libglfw3.
 #endif()
 
 # target_link_libraries(danmaku-game
-#  Threads::Threads 
+#  Threads::Threads
 #  ${CMAKE_DL_LIBS})
-
