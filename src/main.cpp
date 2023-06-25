@@ -21,8 +21,8 @@ int main(void) {
     }
 
     /* Make the window's context current */
-    glfwMakeContextCurrent(window); 
- 
+    glfwMakeContextCurrent(window);
+
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
     /* Loop until the user closes the window */

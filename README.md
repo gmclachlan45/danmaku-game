@@ -24,19 +24,18 @@ For now, you must build/download their headers and binaries
 and add them to include and lib files located at `[PROJECT ROOT]/../external`.
 The following libraries are required:
 - glfw3
-  - Windows: move `GLFW/` into `../external/include/` and move `libglfw3.a` into `../external/lib/`
+  - To build from source:
+    - `cd ../external`
+    - `git clone https://github.com/glfw/glfw.git`
+    - `cd glfw`
+    - `cmake -S . -B build`
+    - `cd build`
+    - `make`
+  - Move `glfw/include/GLFW/` into `../external/include/` and move `glfw/build/src/libglfw3.a` into `../external/lib/`
 - glad
   - Windows: move `glad/` and `KHR/` into `../external/include/`
 - TBD resources library
 - TBD audio library
-
-
-On Linux:
-(?)
-
-On *BSD:
-(?)
-
 
 # Build instructions
 ## Windows
