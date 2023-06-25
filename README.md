@@ -1,6 +1,6 @@
 # danmaku-game
-A 2D Shmup being made as a collaborative passion project
 
+A 2D Shmup being made as a collaborative passion project
 
 # Requirements
 ## Development Tools
@@ -46,4 +46,3 @@ On *BSD:
 ## Linux/*BSD
 1.) In the root of this project, run `cmake . -G "Unix Makefiles"` (?)
 2.) Run `make`
-
