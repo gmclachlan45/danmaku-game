@@ -5,6 +5,7 @@
 
 
 
+
 void processInput(GLFWwindow *window) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         std::cout << "Esc ";
@@ -24,10 +25,26 @@ void processInput(GLFWwindow *window) {
 	std::cout << std::endl;
 }
 
+
+const char *vertexShaderSource = "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main() {\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+
+
+const char *fragmentShaderSource = "#version 330 core\n"
+    "out vec4 FragColor;\n"
+    "void main() {\n"
+    "   FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);"
+    "}\0";
+
+
+
 int main(void) {
     std::cout << "Hello Danmaku" << std::endl;
     GLFWwindow* window;
-	
+
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -55,7 +72,80 @@ int main(void) {
 	  return -1;
 	};
 
-	glViewport(0, 0, 800, 600);
+    // Vertex Buffer Preamble
+
+    float vertices[] = {
+        -0.5f, 0.5f, 0.0f,
+        0.5f, 0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f
+    };
+
+    unsigned int VBO;
+    glGenBuffers(1, &VBO);
+
+
+    // Shader Preamble
+    unsigned int vertexShader;
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(vertexShader);
+
+    int success;
+    char infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if(!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION\n" << infoLog << std::endl;
+    }
+
+    unsigned int fragmentShader;
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
+
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if(!success) {
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION\n" << infoLog << std::endl;
+    }
+
+    unsigned int shaderProgram;
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if(!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        std::cout <<"ERROR::SHADER::LINK\n" <<infoLog <<std::endl;
+        return -1;
+    }
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    // Vertex Array Object preamble
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+
+    // bind Vertex Array Object
+    glBindVertexArray(VAO);
+
+    // Copy our vertices array into a buffer for OpenGl to use
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    //Then set the vertex attribute pointers
+    glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // Use our shader program when we want to render an object
+    glUseProgram(shaderProgram);
+
+
+    glViewport(0, 0, 800, 600);
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)){
@@ -63,13 +153,18 @@ int main(void) {
         glClear(GL_COLOR_BUFFER_BIT);
 	    /* Take input */
         processInput(window);
-		
+
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // Draw the object
+        glBindVertexArray(VAO);
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
 		/* Poll for and process events */
         glfwPollEvents();
-		
+
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 		glfwSwapInterval(1);
