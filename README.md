@@ -18,6 +18,9 @@ Some notes (for myself):
   - `choco install mingw` Installs all the GNU tools
   - `choco install cmake --installargs 'ADD_CMAKE_TO_PATH=User'`
 - On Linux
+  - Debian:
+    - `sudo apt install cmake doxygen libcppunit-dev`
+    - `apt-get install libxss-dev libxxf86vm-dev libxkbfile-dev libxv-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev`
 - OpenBSD uses Clang by default, so the GNU tools will need to be installed separately
   - `doas pkg_add git g++ cmake gmake`
   - to use GNU's C++ compiler, you'll have to use `eg++`
