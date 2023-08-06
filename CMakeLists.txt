@@ -19,7 +19,7 @@ set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
-Add_executable(danmaku-game src/glad.c src/main.cpp)
+Add_executable(danmaku-game src/glad.c src/main.cpp src/player.cpp)
 
 target_include_directories(danmaku-game PRIVATE ${CMAKE_BINARY_DIR}/../external/include)
 #if(WIN32)

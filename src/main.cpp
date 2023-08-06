@@ -3,22 +3,30 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include "player.h"
 
 
-
-void processInput(GLFWwindow *window) {
+void processInput(GLFWwindow *window, player* p_player) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         std::cout << "Esc ";
     if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         std::cout << "Shift ";
-    if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
         std::cout << "Up ";
-    if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        p_player->move_up();
+    }
+    if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
         std::cout << "Down ";
-    if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        p_player->move_down();
+    }
+    if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
         std::cout << "Left ";
-    if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        p_player->move_left();
+    }
+    if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         std::cout << "Right ";
+        p_player->move_right();
+    }
     if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
         std::cout << "Z ";
 
@@ -146,13 +154,14 @@ int main(void) {
 
 
     glViewport(0, 0, 800, 600);
-
+    player MainPlayer;
+    player* pMainPlayer = & MainPlayer;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 	    /* Take input */
-        processInput(window);
+        processInput(window, pMainPlayer);
 
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
