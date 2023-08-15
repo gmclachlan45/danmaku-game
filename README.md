@@ -43,9 +43,9 @@ The following libraries are required:
   - Move `glfw/include/GLFW/` into `../external/include/` and move `glfw/build/src/libglfw3.a` into `../external/lib/`
 - glad
   - This is provided by an online generator at https://glad.dav1d.de/
-    - Set Language to `C/C++` 
+    - Set Language to `C/C++`
     - Under API set gl to `Version 3.3`
-    - Under Specification, choose `OpenGL` 
+    - Under Specification, choose `OpenGL`
     - Under Profile choose `Core`
     - Click Generate
   - Download the glad.zip, unzip it
@@ -55,8 +55,15 @@ The following libraries are required:
     - `cd ../external/`
     - `git clone https://github.com/g-truc/glm.git`
   - then move `glm/glm/` into `../external/include/`
-  
-- TBD resources library
+
+- stb_image
+  - Another header only file that you clone into `../external/include/`
+
+    - `cd ../external/include`
+    - `mkdir stb`
+    - go to `https://github.com/nothings/stb/blob/master/stb_image.h`
+    - Download the raw file,
+    - then move it into `../external/include/stb/`
 - TBD audio library
 
 # Build instructions
@@ -70,4 +77,4 @@ The following libraries are required:
 
 ## *BSD
 1.) In the root of this project, run `cmake -G "Unix Makefiles" -D CMAKE_C_COMPILER=egcc -D CMAKE_CXX_COMPILER=eg++ .`
-2.) Run `gmake` 
+2.) Run `gmake`

@@ -3,6 +3,9 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
+
 #include "player.h"
 
 
@@ -50,10 +53,8 @@ const char *fragmentShaderSource = "#version 330 core\n"
 
 
 int main(void) {
-    std::cout << "Hello Danmaku" << std::endl;
-    GLFWwindow* window;
-
-    /* Initialize the library */
+	std::cout << "Hello Danmaku" << std::endl;
+	// Initialize OpenGL
     if (!glfwInit())
         return -1;
 
@@ -64,7 +65,14 @@ int main(void) {
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+	// TODO: prompt for fullscreen or windowed depending on config
+
+
+
+	// TODO start: Create rendering engine to handle the drawing of objects and menus
     /* Create a windowed mode window and its OpenGL context */
+
+    GLFWwindow* window;
     window = glfwCreateWindow(800, 600, "Danmaku Game", NULL, NULL);
     if (!window) {
 	    std::cout << "Failed to create window" << std::endl;
@@ -154,6 +162,11 @@ int main(void) {
 
 
     glViewport(0, 0, 800, 600);
+
+
+	// End of TODO
+	// Game game;
+
     player MainPlayer;
     player* pMainPlayer = & MainPlayer;
     /* Loop until the user closes the window */
