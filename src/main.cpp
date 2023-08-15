@@ -38,16 +38,26 @@ void processInput(GLFWwindow *window, player* p_player) {
 
 
 const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main() {\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
+  "layout (location = 0) in vec3 aPos;"
+  "layout (location = 1) in vec3 aColor;"
+  "layout (location = 2) in vec2 aTexCoord;"
+  "out vec4 vertexColor;"
+  "out vec2 TexCoord;"
+  "void main() {"
+  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"
+  "   vertexColor = vec4(aColor, 1.0);"
+  "TexCoord = aTexCoord;"
+  "}\0";
 
 
 const char *fragmentShaderSource = "#version 330 core\n"
+  
     "out vec4 FragColor;\n"
+  "in vec4 vertexColor;"
+  "in vec2 TexCoord;"
+  "uniform sampler2D ourTexture;"
     "void main() {\n"
-    "   FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);"
+    "   FragColor =  texture(ourTexture, TexCoord) * vec4(vertexColor);"
     "}\0";
 
 
@@ -91,16 +101,40 @@ int main(void) {
     // Vertex Buffer Preamble
 
     float vertices[] = {
-        -0.5f, 0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f
+      // aPos                aColor               aTexCoord
+        -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 
+        0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 
+         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
     };
 
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
+    // texture preamble
+    //    glEnable(GL_TEXTURE_2D);
+    stbi_set_flip_vertically_on_load(true); 
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    // set the texture wrapping/filtering options (on the currently bound texture object)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load and generate the texture
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load("resources/00-smile.png", &width, &height, &nrChannels, 0);
+    if (data) {
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            std::cout << "loaded" << std::endl;
+      glGenerateMipmap(GL_TEXTURE_2D);
+    } else {
+      std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
 
+    
     // Shader Preamble
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -153,10 +187,21 @@ int main(void) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    //Then set the vertex attribute pointers
-    glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    //Then set the vertex position attribute pointers
+    glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    
+    //Then set the vertex color attribute pointers
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    //Then set the vertex texture attribute pointers
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    
+    
     // Use our shader program when we want to render an object
     glUseProgram(shaderProgram);
 
@@ -178,6 +223,11 @@ int main(void) {
 
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+
+        //        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE0);
+
 
         // Draw the object
         glBindVertexArray(VAO);
