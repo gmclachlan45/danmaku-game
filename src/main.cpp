@@ -6,6 +6,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "player.h"
 #include "game.h"
 
@@ -66,7 +70,7 @@ int main(void) {
 	std::cout << "Hello Danmaku" << std::endl;
     // Start the game
 
-    game danmakuGame
+    Game danmakuGame;
 	// Initialize OpenGL
     if (!glfwInit())
         return -1;
@@ -134,7 +138,7 @@ int main(void) {
     unsigned char *data = stbi_load("resources/00-smile.png", &width, &height, &nrChannels, 0);
     if (data) {
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            std::cout << "loaded" << std::endl;
+
       glGenerateMipmap(GL_TEXTURE_2D);
     } else {
       std::cout << "Failed to load texture" << std::endl;
@@ -218,6 +222,13 @@ int main(void) {
 
 	// End of TODO
 	// Game game;
+
+    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+    vec = trans * vec;
+    std::cout << vec.x<< vec.y<< vec.z << std::endl;
+    return 0;
 
     player MainPlayer;
     player* pMainPlayer = & MainPlayer;
