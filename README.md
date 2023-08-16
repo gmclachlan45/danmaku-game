@@ -66,6 +66,17 @@ The following libraries are required:
     - then move it into `../external/include/stb/`
 - TBD audio library
 
+# Coding Style & Naming conventions
+- Classes are PascalCase
+- Functions are camelCase
+- Local variables are camelCase
+    - using pointers, it will be pCamelCase
+- Tab = 4 spaces
+- K&R style braces
+- Unix style newlines
+- Files are snake_case
+Subject to change as standard style is chosen
+    
 # Build instructions
 ## Windows
 1.) In the root of this project, run `cmake . -G "MinGW Makefiles"`

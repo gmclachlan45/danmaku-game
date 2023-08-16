@@ -7,7 +7,7 @@
 #include <stb/stb_image.h>
 
 #include "player.h"
-
+#include "game.h"
 
 void processInput(GLFWwindow *window, player* p_player) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -64,6 +64,9 @@ const char *fragmentShaderSource = "#version 330 core\n"
 
 int main(void) {
 	std::cout << "Hello Danmaku" << std::endl;
+    // Start the game
+
+    game danmakuGame
 	// Initialize OpenGL
     if (!glfwInit())
         return -1;
