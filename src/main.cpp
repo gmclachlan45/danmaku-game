@@ -10,61 +10,29 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "player.h"
+#include "../lib/player.h"
 #include "game.h"
 
-void processInput(GLFWwindow *window, player* p_player) {
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        std::cout << "Esc ";
-    if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        std::cout << "Shift ";
-    if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-        std::cout << "Up ";
-        p_player->move_up();
-    }
-    if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        std::cout << "Down ";
-        p_player->move_down();
-    }
-    if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-        std::cout << "Left ";
-        p_player->move_left();
-    }
-    if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-        std::cout << "Right ";
-        p_player->move_right();
-    }
-    if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-        std::cout << "Z ";
-
-	std::cout << std::endl;
-}
-
-
 const char *vertexShaderSource = "#version 330 core\n"
-  "layout (location = 0) in vec3 aPos;"
-  "layout (location = 1) in vec3 aColor;"
-  "layout (location = 2) in vec2 aTexCoord;"
-  "out vec4 vertexColor;"
-  "out vec2 TexCoord;"
-  "void main() {"
-  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"
-  "   vertexColor = vec4(aColor, 1.0);"
-  "TexCoord = aTexCoord;"
-  "}\0";
-
+    "layout (location = 0) in vec3 aPos;"
+    "layout (location = 1) in vec3 aColor;"
+    "layout (location = 2) in vec2 aTexCoord;"
+    "out vec4 vertexColor;"
+    "out vec2 TexCoord;"
+    "void main() {"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"
+    "   vertexColor = vec4(aColor, 1.0);"
+    "TexCoord = aTexCoord;"
+    "}\0";
 
 const char *fragmentShaderSource = "#version 330 core\n"
-
     "out vec4 FragColor;\n"
-  "in vec4 vertexColor;"
-  "in vec2 TexCoord;"
-  "uniform sampler2D ourTexture;"
+    "in vec4 vertexColor;"
+    "in vec2 TexCoord;"
+    "uniform sampler2D ourTexture;"
     "void main() {\n"
     "   FragColor =  texture(ourTexture, TexCoord) * vec4(vertexColor);"
     "}\0";
-
-
 
 int main(void) {
 	std::cout << "Hello Danmaku" << std::endl;
@@ -228,16 +196,16 @@ int main(void) {
     trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
     vec = trans * vec;
     std::cout << vec.x<< vec.y<< vec.z << std::endl;
-    return 0;
+    //    return 0;
 
-    player MainPlayer;
-    player* pMainPlayer = & MainPlayer;
+    Player MainPlayer;
+    Player* pMainPlayer = & MainPlayer;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 	    /* Take input */
-        processInput(window, pMainPlayer);
+        danmakuGame.controller.handleGame(window, pMainPlayer);
 
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);

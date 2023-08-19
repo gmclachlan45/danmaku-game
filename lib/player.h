@@ -1,4 +1,6 @@
-class player {
+#pragma once
+
+class Player {
 private:
     int x;
     int y;
@@ -6,8 +8,8 @@ private:
     int score;
 
 public:
-    player();
-    ~player();
+    Player();
+    ~Player();
 
     void move_up();
     void move_down();

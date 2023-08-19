@@ -2,7 +2,7 @@
 
 Game::Game(void) {
     std::cout << "This is the start of a brand new game" << std::endl;
-
+    
     //load the config and data that determines certain settings
 
     state = 1; // set the game state to menu

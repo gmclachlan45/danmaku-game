@@ -58,12 +58,9 @@ The following libraries are required:
 
 - stb_image
   - Another header only file that you clone into `../external/include/`
-
-    - `cd ../external/include`
-    - `mkdir stb`
-    - go to `https://github.com/nothings/stb/blob/master/stb_image.h`
-    - Download the raw file,
-    - then move it into `../external/include/stb/`
+    - `cd ../external/`
+    - `git clone https://github.com/nothings/stb`
+    - then move stb_image.h into `../external/include/stb/`
 - TBD audio library
 
 # Coding Style & Naming conventions
