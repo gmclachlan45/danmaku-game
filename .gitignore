@@ -35,7 +35,7 @@ bin/*
 # Emacs files
 *~
 \#*\#
-
+*\#*
 # CMake files
 CMakeLists.txt.user
 CMakeCache.txt

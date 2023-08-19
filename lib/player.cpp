@@ -1,5 +1,3 @@
-#pragma once
-
 #include "player.h"
 #include <iostream>
 Player::Player( void ) {

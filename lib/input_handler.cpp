@@ -1,7 +1,7 @@
 #include "input_handler.h"
 
 InputHandler::InputHandler(void) {
-    // use enums eventually
+    // use e
     inputType = 1;    
 }
 
