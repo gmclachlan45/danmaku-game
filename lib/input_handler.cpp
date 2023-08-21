@@ -13,26 +13,26 @@ void InputHandler::handleMenu() {
     // TBD far in future
 }
 
-void InputHandler::handleGame(GLFWwindow* window, Player* p_player) {
+void InputHandler::handleGame(GLFWwindow* window, Player* pPlayer) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         std::cout << "Esc ";
     if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         std::cout << "Shift ";
     if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
         std::cout << "Up ";
-        p_player->move_up();
+        pPlayer->moveUp();
     }
     if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
         std::cout << "Down ";
-        p_player->move_down();
+        pPlayer->moveDown();
     }
     if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
         std::cout << "Left ";
-        p_player->move_left();
+        pPlayer->moveLeft();
     }
     if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         std::cout << "Right ";
-        p_player->move_right();
+        pPlayer->moveRight();
     }
     if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
         std::cout << "Z ";
