@@ -34,8 +34,8 @@ Game::Game(void) {
     std::cout << "This is the start of a brand new game" << std::endl;
     // Read data from game.data, get screen options
     // TODO: prompt for fullscreen or windowed depending on config
-
-    window = Game::createGameWindow(1200, 800, false);
+    // Default to 4:3 HD. TODO: add strips for fullscreen
+    window = Game::createGameWindow(1024, 768, false);
 	/* Make the window's context current */
     glfwMakeContextCurrent(window);
 
