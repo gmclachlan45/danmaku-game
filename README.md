@@ -63,6 +63,13 @@ The following libraries are required:
     - then move stb_image.h into `../external/include/stb/`
 - TBD audio library
 
+## The Assets
+Due to the differences between code and created works, the assets are located in another (currently private) repository named `danmaku-game-assets`.
+
+For the code to be made correctly all you need to do is clone that repo into the same folder as `danmaku-game`.
+- `cd ..`
+- `git clone .../danmaku-game-assets.git`
+
 # Coding Style & Naming conventions
 - Classes are PascalCase
 - Functions are camelCase
@@ -73,7 +80,7 @@ The following libraries are required:
 - Unix style newlines
 - Files are snake_case
 Subject to change as standard style is chosen
-    
+
 # Build instructions
 ## Windows
 1.) In the root of this project, run `cmake . -G "MinGW Makefiles"`
