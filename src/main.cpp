@@ -63,10 +63,10 @@ int main(void) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load and generate the texture
     int width, height, nrChannels;
-    unsigned char *data = stbi_load("assets/enemies/peons/00-wanka.png", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("assets/images/player/in-game/00-main.png", &width, &height, &nrChannels, 0);
     if (data) {
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
@@ -133,7 +133,6 @@ int main(void) {
     glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-
     //Then set the vertex color attribute pointers
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
@@ -148,8 +147,7 @@ int main(void) {
     glUseProgram(shaderProgram);
 
 
-    glViewport(0, 0, 800, 600);
-
+    glViewport(0, 0, 1024, 768);
 
 	// End of TODO
 	// Game game;
@@ -164,11 +162,11 @@ int main(void) {
     Player MainPlayer;
     Player* pMainPlayer = & MainPlayer;
     /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(danmakuGame.window)){
+    while (!glfwWindowShouldClose(danmakuGame.pWindow)){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 	    /* Take input */
-        danmakuGame.controller.handleGame(danmakuGame.window, pMainPlayer);
+        danmakuGame.controller->handleGame(pMainPlayer);
         std::cout << pMainPlayer->x << pMainPlayer->y << std::endl;;
 
         /* Render here */
@@ -188,10 +186,10 @@ int main(void) {
         glfwPollEvents();
 
         /* Swap front and back buffers */
-        glfwSwapBuffers(danmakuGame.window);
+        glfwSwapBuffers(danmakuGame.pWindow);
 		glfwSwapInterval(1);
 
-    } 
+    }
     std::cout << "Exiting..." << std::endl;
     glfwTerminate();
     return 0;

@@ -12,17 +12,17 @@
 
 class Game {
 private:
-	unsigned int state; // State if in menu, in game, game paused etc.
-    GLFWwindow* createGameWindow(int, int, bool);
-    // rendering engine
-    // audio engine
-    // controller engine
-public:
-    GLFWwindow* window;
-    GraphicsRenderer renderer;
-    InputHandler controller;
 
+	unsigned int state; // State if in menu, in game, game paused etc.
+    // Rendering engine
+    GraphicsRenderer* renderer;
+    // Contraller engine
+
+    // Audio engine
+
+public:
+    GLFWwindow* pWindow;
+    InputHandler* controller;
     Game(void);
     ~Game(void);
-
 };

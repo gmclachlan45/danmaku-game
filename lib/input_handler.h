@@ -11,11 +11,14 @@ class InputHandler {
 private:
     // query for controller
     unsigned int inputType;
+    GLFWwindow* pWindow;
+
 public:
     // Load the user config
     InputHandler(void);
+    InputHandler(GLFWwindow*);
     // InputHandler(unsigned int* pButtonArray, int arraySize);
     ~InputHandler(void);
     void handleMenu(/*Menu* pMenu*/);
-    void handleGame(GLFWwindow*, Player*);
+    void handleGame(Player*);
 };
